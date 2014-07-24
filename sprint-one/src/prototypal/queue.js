@@ -3,28 +3,28 @@ var makeQueue = function() {
   // but try not not reference your old code in writing the new style.
   var someInstance = Object.create(queueMethods);
   someInstance.storage = {};
+  someInstance.last  = 0;
+  someInstance.first = 0;
+  someInstance.count = 0;
+
+  return someInstance;
 };
 
 var queueMethods = {
-  enqueue: function (val) {
-    var keys;
-    if (this.size()) {
-      key = (Object.keys(this.storage)[this.size() - 1]) + 1;  
-    } else {
-      key = 0;
-    }
-    this.storage[key] = val;
+  enqueue: function (value) {
+    this.storage[this.last] = value;
+    this.last += 1;
+    this.count += 1;
   },
   dequeue: function () {
-    var dequeued;
-    var keys;
-    key = Object.keys(this.storage)[0] || 0;
-    dequeued = this.storage[key];
-    delete this.storage[key];
+    var dequeued = this.storage[this.first];
+    delete this.storage[this.first];
+    this.first += 1;
+    this.count = this.count ? this.count - 1 : 0;
     return dequeued;
   },
   size: function () {
-    return Object.keys(this.storage).length;
+    return this.count;
   }
 };
 
