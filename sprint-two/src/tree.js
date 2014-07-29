@@ -1,34 +1,52 @@
 var makeTree = function(value){
-  var newTree = Object.create(treeMethods);
-  newTree.value = value;
-  newTree.children = undefined;
-  return newTree;
+  var tree = Object.create(treeMethods);
+  tree.value = value;
+  tree.parent = null;
+  tree.children = undefined;
+  return tree;
 };
 
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
+  var node = makeTree(value);
+
+  node.parent = this;
+  
   if (!this.children) {
-    this.children = [];    
+    this.children = [];
   }
-  this.children.push(makeTree(value));
+
+  this.children.push(node);
 };
 
-treeMethods.contains = function(target, node){
-  node = node || this;
-  if (node.value !== target) {
-    if (node.children) {
-      for (var i = 0; i < node.children.length; i++) {
-        if (!this.contains(target, node.children[i])) {
-          continue;
-        } else {
-          return true;
-        }
-      }
+treeMethods.removeFromParent = function () {
+  var children = this.parent.children;
+  
+  // remove from children in parent
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].value === this.value) {
+      children.splice(i,1);
     }
-  } else {
+  }
+  
+  // remove reference to parent
+  this.parent = null;
+};
+
+treeMethods.contains = function(target){
+  if (this.value === target) {
     return true;
   }
+
+  if (this.children)  {
+    for (var i = 0; i < this.children.length; i++)  {
+      if (this.children[i].contains(target)) {
+        return true;
+      }
+    }
+  }
+  
   return false;
 };
 
@@ -37,7 +55,3 @@ treeMethods.contains = function(target, node){
  * Complexity: What is the time complexity of the above functions?
  *
 */
-
-
-//tree.children => [{value: 5, children:[]}]
-//tree.children[0]
