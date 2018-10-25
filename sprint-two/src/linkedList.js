@@ -1,72 +1,49 @@
-var makeLinkedList = function(){
+var LinkedList = function() {
   var list = {};
-
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(value){
-    var node = makeNode(value);
-
-    if (!list.head) {
-      list.head = node;
-      list.tail = node;
-    } else {
-      var oldTail = list.tail;
-      list.tail.next = node;
-      list.tail = node;
-      list.tail.prev = oldTail;
-
-      return oldTail.value;
+  list.addToTail = function(value) {
+    var node = Node(value);
+    if (list.head=== null){
+      list.head=node;
     }
+    if (list.tail !== null){
+    list.tail.next=node;
+  }
+    list.tail=node;
+  
   };
 
-  list.addToHead = function (value) {
-    var node = makeNode(value);
-    var oldHead = list.head;
-
-    list.head = node;
-    list.head.next = oldHead;
-
-    oldHead.prev = node;
-  };
-
-  list.removeHead = function(){
-    var oldhead = list.head;
-    list.head = list.head.next;
-
-    if (list.head) {
-      list.head.prev = null;
+  list.removeHead = function() {
+    if (list.head===null){
+      return false;
     }
+    var oldHead = list.head.value;
+     list.head=list.head.next;
+     return oldHead;
 
-    return oldhead.value;
+
   };
 
-  list.removeTail = function() {
-    list.tail = list.tail.prev;
-    list.tail.next = null;
-  };
-
-  list.contains = function(target){
-    var node = list.head;
-
-    while (node !== null) {
-      if (node.value === target) {
+  list.contains = function(target) {
+    
+    while( list.head!== null){
+      if (target === list.head.value){
         return true;
       }
-      node = node.next;
+      list.head = list.head.next;
     }
-    return false;
-  };
-
-  return list;
+  return false;
 };
+return list;
+}
 
-var makeNode = function(value){
+var Node = function(value) {
   var node = {};
 
   node.value = value;
   node.next = null;
-  node.prev = null;
 
   return node;
 };
@@ -74,4 +51,3 @@ var makeNode = function(value){
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-

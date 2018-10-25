@@ -1,50 +1,55 @@
-var BinarySearchTree = function(value){
-  this.left  = undefined;
-  this.right = undefined;
-  this.value = value;
-};
+var BinarySearchTree = function(value) {
+   var instance = Object.create(BinarySearchTree.prototype);
+     instance.value = value;
+     instance.right;
+     instance.left ;
+   return instance
+ };
 
-BinarySearchTree.prototype.insert = function (value) {
-  var node = new BinarySearchTree(value);
-  var direction = value < this.value ? 'left' : 'right';
+ BinarySearchTree.prototype.insert = function (value) {
+   var node = BinarySearchTree(value);
+   function recursive (BinarySearchTree) {
+     if (BinarySearchTree.value > value && BinarySearchTree.left === undefined) {
+       BinarySearchTree.left = node;
+     } else if (BinarySearchTree.value > value) {
+       recursive (BinarySearchTree.left);
+     } else if (BinarySearchTree.value < value && BinarySearchTree.right === undefined) {
+       BinarySearchTree.right = node;
+     } else if (BinarySearchTree.value < value) {
+       recursive (BinarySearchTree.right);
+     }
+   }
+   recursive (this);
+ }
 
-  if (!this[direction]) {
-    this[direction] = node;
-  } else {
-    this[direction].insert(value);
-  }
-};
+ BinarySearchTree.prototype.contains = function (value) {
+   var contain = false;
+   function recursive (BinarySearchTree) {
+     if (BinarySearchTree.value === value) {
+       contain = true;;
+     } else if (BinarySearchTree.left !== undefined && value < BinarySearchTree.value) {
+       recursive (BinarySearchTree.left);
+     } else if (BinarySearchTree.right !== undefined && value > BinarySearchTree.value) {
+       recursive (BinarySearchTree.right)
+     }
+   }
+   recursive (this);
+   return contain;
+ }
 
-BinarySearchTree.prototype.contains = function (value) {
-  var direction = value < this.value ? 'left' : 'right';
-
-  if (this.value === value) {
-    return true;
-  } else  {
-    if (this[direction] !== undefined)  {
-      return this[direction].contains(value);
-    }
-  }
-  
-  return false;
-};
-
-BinarySearchTree.prototype.depthFirstLog = function (callback) {
-  callback(this.value);
-  
-  if (this.left) {
-    this.left.depthFirstLog(callback);
-  }
-  if (this.right) {
-    this.right.depthFirstLog(callback);
-  }
-};
-
-BinarySearchTree.prototype.bredthFirstLog = function (callback) {
-  // TODO!
-};
-
+ BinarySearchTree.prototype.depthFirstLog = function (callback) {
+   function recursive (BinarySearchTree) {
+     callback.call(BinarySearchTree, BinarySearchTree.value)
+     if (BinarySearchTree.left !== undefined) {
+       recursive (BinarySearchTree.left)
+     }
+     if (BinarySearchTree.right !== undefined) {
+       recursive (BinarySearchTree.right);
+     }
+   }
+   recursive (this);
+ }
 
 /*
- * Complexity: What is the time complexity of the above functions?
- */
+* Complexity: What is the time complexity of the above functions?
+*/

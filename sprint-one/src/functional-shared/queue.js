@@ -1,31 +1,40 @@
-var makeQueue = function(){
+var Queue = function() {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
-  var someInstance = {};
-  someInstance.storage = {};
-  someInstance.first = 0;
-  someInstance.last = 0;
-  someInstance.count = 0;
-  return _.extend(someInstance, queueMethods);
+  var newQueue = {};
+  newQueue.storage = {};
+  newQueue.front = 0;
+  newQueue.rear = 0;
+  extend(newQueue, queueMethods);
+  return newQueue;
 };
 
-var queueMethods = {
-  enqueue: function (value) {
-    this.storage[this.last] = value;
-    this.last += 1;
-    this.count += 1;
-  },
-  dequeue: function () {
-    var dequeued = this.storage[this.first];
-    delete this.storage[this.first];
-    this.count = this.count ? this.count - 1 : 0;
-    this.first += 1;
-    return dequeued;
-  },
-  size: function () {
-    return this.count;
+var extend = function(to, from) {
+  for (var key in from) {
+    to[key] = from[key];
   }
 };
 
+var queueMethods = {};
 
+queueMethods.size = function (){
+  return this.rear - this.front ;
+};
 
+queueMethods.enqueue = function (value){
+  
+  this.storage[this.rear] = value;
+  this.rear ++ ;
+};
+
+queueMethods.dequeue = function (){
+  if (this.rear - this.front == 0){
+    return false ;
+  }
+  
+  var x = this.storage[this.front];
+  delete this.storage[this.front];
+  this.front ++ ;
+  return x;
+  
+};
