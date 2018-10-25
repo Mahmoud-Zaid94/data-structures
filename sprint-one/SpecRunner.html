@@ -4,20 +4,20 @@
   <head>
     <style>
       body {
-        width: 120%;
+        width: 150%;
         margin: 0;
         padding: 0;
       }
       iframe {
-        width: 24%;
+        width: 20%;
         border-width: 0;
       }
     </style>
     <script src="../lib/jquery/jquery.js"></script>
     <script src="../lib/underscore/underscore.js"></script>
     <script>
-      $(function(){
-        $.each(['functional', 'functional-shared', 'prototypal', 'pseudoclassical'], function(i, variant){
+      $(function() {
+        $.each(['functional', 'functional-shared', 'prototypal', 'pseudoclassical', 'es6'], function(i, variant) {
           $('<iframe src="' + window.location.toString().replace('.html', 'Section.html?') + variant + '" />').appendTo(document.body);
         });
 

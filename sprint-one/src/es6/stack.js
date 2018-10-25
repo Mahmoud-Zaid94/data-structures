@@ -1,21 +1,17 @@
-var Stack = function() {
+class Stack {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
-var newStack = Object.create(stackMethods);
-newStack.storage = {};
-newStack.size1 = 0 ;
-return newStack ;
-};
+  constructor() {
+    this.storage = {};
+    this.size1 = 0 ;
+  }
 
-
-var stackMethods = {};
-
-stackMethods.push = function(val){
+push (val){
     this.storage[this.size1] = val;
     this.size1 ++ ;
 };
 
-stackMethods.pop = function (){
+pop (){
   if (this.size1 == 0){
     return false ;
   }
@@ -25,6 +21,7 @@ stackMethods.pop = function (){
   return x;
 };
 
-stackMethods.size = function (){
+size (){
   return this.size1 ;
 };
+}

@@ -1,48 +1,30 @@
-var makeQueue = function(){
+var Queue = function() {
   var someInstance = {};
+
+  // Use an object with numeric keys to store values
   var storage = {};
-<<<<<<< HEAD
+  var rear = 0 ;
+  var front = 0 ;
 
   // Implement the methods below
-  someInstance.enqueue = function(value){
-    var index = someInstance.size() > 0 ? someInstance.size() : 0;
-    storage[index] = value;
+
+  someInstance.enqueue = function(value) {
+    storage[rear] = value;
+    rear ++ ;
   };
 
-  someInstance.dequeue = function(){
-    var index = Object.keys(storage)[0] || 0;
-    
-    if (storage[index] !== undefined) {
-      var dequeued = storage[index];
-      delete storage[index];
-      return dequeued;
+  someInstance.dequeue = function() {
+    if (rear - front == 0){
+      return false ;
     }
+    var x = storage[front] ;
+    delete storage[front];
+    front ++ ;
+    return x ;
   };
 
-  someInstance.size = function(){
-    return Object.keys(storage).length;
-=======
-  var first = 0;
-  var last = 0;
-  var count = 0;
-
-  someInstance.enqueue = function(value){
-    storage[last] = value;
-    last += 1;
-    count += 1;
-  };
-
-  someInstance.dequeue = function(){
-    var dequeued = storage[first];
-    delete storage[first];
-    first += 1;
-    count = count ? count - 1 : 0;
-    return dequeued;
-  };
-
-  someInstance.size = function(){
-    return count;
->>>>>>> solo
+  someInstance.size = function() {
+    return rear - front ;
   };
 
   return someInstance;
